@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 require('dotenv/config');
 const apiUrl = process.env.API_URL
-const routes = require("./routes");
+const routes = require("./src/users/userRoutes");
 
 app.use(cors());
 app.use(express.json());
