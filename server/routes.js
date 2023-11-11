@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('./db');
 const apiUrl = process.env.API_URL;
 
-router.get('apiUrl/users', async (req, res) => {
+router.get('/users', async (req, res) => {
 	try{
 		const { rows } = await pool.query('SELECT * FROM user');
 		res.json(rows);

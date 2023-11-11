@@ -1,5 +1,5 @@
 {
-  "name": "hiking_spree_backend",
+  "name": "server",
   "version": "1.0.0",
   "description": "users, the parks they visit, and more",
   "main": "index.js",

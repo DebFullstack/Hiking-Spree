@@ -9,7 +9,14 @@ const routes = require("./routes");
 app.use(cors());
 app.use(express.json());
 
-app.use('apiUrl/users', routes);
+app.get('/users', async (req, res) => {
+	try {
+		const allUsers = await pool.query("SELECT * FROM user");
+		res.json(allUsers.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+})
 
 app.listen(5000, () => {
 	console.log("Server is running on port 5000")
