@@ -64,7 +64,7 @@ const createPark = async (req, res) => {
   ];
 
   try {
-    const park = await db.one(parkQueries.createPark, values);
+    await db.none(parkQueries.createPark, values);
     res.status(201).json(park);
   } catch (error) {
     console.error(error);
