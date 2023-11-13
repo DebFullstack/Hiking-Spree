@@ -5,11 +5,11 @@ const cors = require("cors");
 require('dotenv/config');
 const apiUrl = process.env.API_URL
 const userRoutes = require("./users/userRoutes");
-import apicache from "apicahe";
+
 
 app.use(cors());
 app.use(express.json());
-app.use(apicache.middleware("15 minutes"))
+
 
 app.get("/", (req, res) => {
 	res.send('Hello World!');
