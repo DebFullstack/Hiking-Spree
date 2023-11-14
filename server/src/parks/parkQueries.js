@@ -1,4 +1,4 @@
-const getParks = 'SELECT * FROM parks';
+const getParks = 'SELECT * FROM park';
 
 const getParkById = 'SELECT * FROM park WHERE park_id = $1';
 
@@ -22,8 +22,11 @@ const createPark = `
   ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;
 `;
 
+const deleteParkById = 'DELETE FROM park WHERE park_id = $1';
+
 module.exports = {
   getParks,
   getParkById,
   createPark,
+  deleteParkById
 };

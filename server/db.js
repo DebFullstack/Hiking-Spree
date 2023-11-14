@@ -8,4 +8,8 @@ const pool = new Pool ({
 	database: "hiking_spree",
 });
 
-module.exports = pool;
+module.exports = {
+	pool,
+	query: (text, params) => pool.query(text, params),
+  	none: (text, params) => pool.query(text, params).then(() => undefined),
+}

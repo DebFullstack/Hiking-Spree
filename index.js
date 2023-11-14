@@ -1,12 +1,12 @@
 const express = require("express");
-const pool = require('../db');
+const pool = require('./server/db');
 const app = express();
 const cors = require("cors");
 require('dotenv/config');
 const apiUrl = process.env.API_URL
-const userRoutes = require("./users/userRoutes");
-const trailRoutes = require("./trails/trailRoutes");
-const parkRoutes = require("./parks/parkRoutes")
+const userRoutes = require("./server/src/users/userRoutes");
+const trailRoutes = require("./server/src/trails/trailRoutes");
+const parkRoutes = require("./server/src/parks/parkRoutes")
 
 
 app.use(cors());

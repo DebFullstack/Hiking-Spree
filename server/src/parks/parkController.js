@@ -1,31 +1,27 @@
-const db = require('../../db'); 
+const pool = require('../../db'); 
 const parkQueries = require('./parkQueries');
 
 const getParks = async (req, res) => {
-  try {
-    const parks = await db.any(parkQueries.getParks);
-    res.status(200).json(parks);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  pool.query(parkQueries.getParks, (error, results) => {
+    if (error) throw error;
+    res.status(200).json(results.rows);
+  })
 };
 
 const getParkById = async (req, res) => {
   const parkId = req.params.parkId;
 
-  try {
-    const park = await db.oneOrNone(parkQueries.getParkById, [parkId]);
+  pool.query(parkQueries.getParkById, [parkId], (error, results) => {
+		if(error) {
+			console.error(error);
+			return res.status(500).json({ error:'Internal Server Error' });
+		}
 
-    if (!park) {
-      return res.status(404).json({ error: 'Park not found' });
-    }
-
-    res.status(200).json(park);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+		if (results.rows.length === 0) {
+			return res.status(404).json({ error: "Park not found" });
+		}
+		res.status(200).json(results.rows[0]);
+	});
 };
 
 const createPark = async (req, res) => {
@@ -62,18 +58,36 @@ const createPark = async (req, res) => {
     state_2,
     zipcode_2,
   ];
+  pool.query(parkQueries.createPark, values, (error, results) => {
+	  if (error) {
+		console.error(error);
+		return res.status(500).json({ error: 'Internal Server Error' });
+	  }  
+	  res.status(201).json(results.rows[0]);
+	});
+  };
 
-  try {
-    await db.none(parkQueries.createPark, values);
-    res.status(201).json(park);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
+  const deleteParkById = async (req, res) => {
+    const parkId = req.params.parkId;
+    
+    pool.query(parkQueries.deleteParkById, [parkId], (error, results) => {
+      if (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+      }
+    
+      if (results.rows.length === 0) {
+      return res.status(404).json({ error: 'Park not found' });
+      }
+    
+      res.status(200).json({ message: 'Park deleted successfully' });
+    });
+    };
 
+    
 module.exports = {
   getParks,
   getParkById,
   createPark,
+  deleteParkById
 };

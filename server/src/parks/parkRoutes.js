@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require('express');
+const router= Router();
 const parkController = require('./parkController');
 
 // Route to get all parks
@@ -10,5 +10,8 @@ router.get('/:parkId', parkController.getParkById);
 
 // Route to create a new park
 router.post('/', parkController.createPark);
+
+//route to delete park by id
+router.delete('/:parkId', parkController.deleteParkById);
 
 module.exports = router;
