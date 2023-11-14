@@ -45,6 +45,7 @@ CREATE TABLE visit (
     visit_id SERIAL PRIMARY KEY,
     user_id UUID REFERENCES "user"(user_id),
     park_id INT REFERENCES park(park_id),
+    completed BOOLEAN,
     visit_date DATE,
     visit_time TIME,
     rating DECIMAL(4, 2),
