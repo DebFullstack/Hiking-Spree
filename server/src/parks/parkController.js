@@ -63,7 +63,8 @@ const createPark = async (req, res) => {
 		console.error(error);
 		return res.status(500).json({ error: 'Internal Server Error' });
 	  }  
-	  res.status(201).json(results.rows[0]);
+    res.status(201).json(results.rows[0]);
+
 	});
   };
 
