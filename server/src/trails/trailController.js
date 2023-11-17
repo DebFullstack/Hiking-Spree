@@ -9,19 +9,20 @@ const getTrails = async (req, res) => {
 };
 
 const getTrailById = async (req, res) => {
-	const trailId = req.params.trailId;
+    const trailId = req.params.trailId;
 
-	pool.query(trailQueries.getTrailById, [trailId], (error, results) => {
-		if(error) {
-			console.error(error);
-			return res.status(500).json({ error:'Internal Server Error' });
-		}
+    try {
+        const { rows } = await pool.query(trailQueries.getTrailById, [trailId]);
 
-		if (results.rows.length === 0) {
-			return res.status(404).json({ error: "Trail not found" });
-		}
-		res.status(200).json(results.rows[0]);
-	});
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "trail not found" });
+        }
+
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 module.exports = {

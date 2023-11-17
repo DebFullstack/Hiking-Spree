@@ -9,19 +9,20 @@ const getParticipants = async (req, res) => {
 };
 
 const getParticipantById = async (req, res) => {
-	const participantId = req.params.participantId;
+    const participantId = req.params.participantId;
 
-	pool.query(participantQueries.getParticipantById, [participantId], (error, results) => {
-		if(error) {
-			console.error(error);
-			return res.status(500).json({ error:'Internal Server Error' });
-		}
+    try {
+        const { rows } = await pool.query(participantQueries.getParticipantById, [ParticipantId]);
 
-		if (results.rows.length === 0) {
-			return res.status(404).json({ error: "participant not found" });
-		}
-		res.status(200).json(results.rows[0]);
-	});
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Participant not found" });
+        }
+
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 const createParticipant = async (req, res) => {

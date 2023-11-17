@@ -11,17 +11,18 @@ const getParks = async (req, res) => {
 const getParkById = async (req, res) => {
   const parkId = req.params.parkId;
 
-  pool.query(parkQueries.getParkById, [parkId], (error, results) => {
-		if(error) {
-			console.error(error);
-			return res.status(500).json({ error:'Internal Server Error' });
-		}
+  try {
+      const { rows } = await pool.query(parkQueries.getParkById, [parkId]);
 
-		if (results.rows.length === 0) {
-			return res.status(404).json({ error: "Park not found" });
-		}
-		res.status(200).json(results.rows[0]);
-	});
+      if (rows.length === 0) {
+          return res.status(404).json({ error: "Park not found" });
+      }
+
+      res.status(200).json(rows[0]);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 const createPark = async (req, res) => {
