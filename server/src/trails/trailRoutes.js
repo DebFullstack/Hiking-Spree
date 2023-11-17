@@ -5,4 +5,6 @@ const router= Router();
 
 router.get("/", controller.getTrails);
 
+router.get("/:trailId", controller.getTrailById);
+
 module.exports = router;
