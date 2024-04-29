@@ -1,34 +1,32 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function App() {
+const ParkList = () => {
   const [parks, setParks] = useState([]);
 
   useEffect(() => {
-    // Fetch parks data when the component mounts
-    axios.get('localhost:3000/api/v1/parks/') // Assuming your backend API endpoint is '/api/parks'
-      .then(response => {
-        // Set the fetched parks data in the state
-        setParks(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching parks data:', error);
-      });
-  }, []); // Empty dependency array ensures this effect runs only once when the component mounts
-
+    // Fetch park data when the component mounts
+    axios.get('http://localhost:3000/api/v1/parks')
+      .then(response => setParks(response.data))
+      .catch(error => console.error('Error fetching park data:', error));
+  }, []);
 
   return (
     <div>
-      <h1>Parks:</h1>
+      <h1>Parks</h1>
       <ul>
         {parks.map(park => (
-          <li key={park.id}>
-            <strong>{park.park_name}</strong> - {park.county}, {park.state}
+          <li key={park.park_id}>
+            <h2>{park.park_name}</h2>
+            <p>County: {park.county}</p>
+            <p>Hiking Spree Challenge: {park.hiking_spree_challenge ? 'Yes' : 'No'}</p>
+            <p>Website: <a href={park.park_website} target="_blank" rel="noopener noreferrer">{park.park_name} Website</a></p>
+            {/* Add more park information as needed */}
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
-export default App;
+export default ParkList;

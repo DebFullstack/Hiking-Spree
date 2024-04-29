@@ -9,10 +9,14 @@ const parkRoutes = require("./src/parks/parkRoutes");
 const participantRoutes = require("./src/participants/participantRoutes");
 
 //specify allowed origins
-app.use(cors());
+//app.use(cors());
 // app.use(cors({
 // 	origin: ['http://localhost:3000', 'http://127.0.0.1:5173']
 //   }));
+app.use(cors({
+	origin: 'http://localhost:5173', // Allow requests from this origin
+	credentials: true // Allow credentials (cookies, authorization headers, etc.)
+  }));
   
 app.use(express.json());
 
