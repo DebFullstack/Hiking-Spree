@@ -1,5 +1,4 @@
 const express = require("express");
-const pool = require('./db');
 const app = express();
 const cors = require("cors");
 require('dotenv/config');
@@ -9,8 +8,12 @@ const trailRoutes = require("./src/trails/trailRoutes");
 const parkRoutes = require("./src/parks/parkRoutes");
 const participantRoutes = require("./src/participants/participantRoutes");
 
-
+//specify allowed origins
 app.use(cors());
+// app.use(cors({
+// 	origin: ['http://localhost:3000', 'http://127.0.0.1:5173']
+//   }));
+  
 app.use(express.json());
 
 
